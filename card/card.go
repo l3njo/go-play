@@ -16,10 +16,22 @@ func (cardStruct *card) getCard() string {
 	return cardStruct.face + " of " + cardStruct.suit
 }
 
-// GetRandomCard returns a random card in string form
+// GetRandomCard returns a random card as a string.
 func GetRandomCard() string {
-	newCard := new(card)
-	newCard.face = faces[rand.Intn(len(faces))]
-	newCard.suit = suits[rand.Intn(len(suits))]
-	return newCard.getCard()
+	randomCard := &card{face: faces[rand.Intn(len(faces))], suit: suits[rand.Intn(len(suits))]}
+	return randomCard.getCard()
+}
+
+// GetRandomCards returns a slice containing n non-unique cards as strings.
+// For a unique set, use getDeck()
+// Panics if n <= 0.
+func GetRandomCards(n int) []string {
+	if n <= 0 {
+		panic("Invalid number of cards")
+	}
+	randomCards := []string{}
+	for len(randomCards) < n {
+		randomCards = append(randomCards, GetRandomCard())
+	}
+	return randomCards
 }
