@@ -2,28 +2,35 @@ package card
 
 import (
 	"math/rand"
+	"time"
 )
 
-type card struct {
+// Card is a basic type containing the suit and face value fields.
+type Card struct {
 	face, suit string
 }
 
-// Card face value
+// TOD0 make constants
 var faces = [...]string{"Ace", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}
 var suits = [...]string{"Spades", "Hearts", "Clubs", "Diamonds"}
 
-func (cardStruct *card) getCard() string {
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
+
+// GetCard ...
+func (cardStruct *Card) GetCard() string {
 	return cardStruct.face + " of " + cardStruct.suit
 }
 
 // GetRandomCard returns a random card as a string.
 func GetRandomCard() string {
-	randomCard := &card{face: faces[rand.Intn(len(faces))], suit: suits[rand.Intn(len(suits))]}
-	return randomCard.getCard()
+	randomCard := &Card{face: faces[rand.Intn(len(faces))], suit: suits[rand.Intn(len(suits))]}
+	return randomCard.GetCard()
 }
 
 // GetRandomCards returns a slice containing n non-unique cards as strings.
-// For a unique set, use getDeck()
+// For a unique set, use GetDeck()
 // Panics if n <= 0.
 func GetRandomCards(n int) []string {
 	if n <= 0 {
