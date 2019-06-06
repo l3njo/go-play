@@ -3,12 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/l3njo/play/card"
+	"github.com/l3njo/play/dice"
 )
 
 func main() {
-	fmt.Println(card.GetRandomCard())
-	for i, v := range card.GetRandomDeck(4) {
-		fmt.Printf("%v: %v\n", i+1, v)
-	}
+	fmt.Println(dice.Roll(2, 3))
+	fmt.Println(dice.RollUneven(2, 3, 4, 2, 7, 3))
 }

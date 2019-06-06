@@ -4,10 +4,6 @@ import (
 	"math/rand"
 )
 
-func init() {
-	// rand.Seed(time.Now().UTC().UnixNano())
-}
-
 // GetOrderedDeck returns an entire ordered deck as a slice
 func GetOrderedDeck() (deck []string) {
 	deck = []string{}
