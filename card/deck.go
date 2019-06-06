@@ -1,5 +1,13 @@
 package card
 
+import (
+	"math/rand"
+)
+
+func init() {
+	// rand.Seed(time.Now().UTC().UnixNano())
+}
+
 // GetOrderedDeck returns an entire ordered deck as a slice
 func GetOrderedDeck() (deck []string) {
 	deck = []string{}
@@ -15,26 +23,29 @@ func GetOrderedDeck() (deck []string) {
 // GetShuffledDeck returns an entire shuffled deck as a slice
 func GetShuffledDeck() (shuffledDeck []string) {
 	shuffledDeck = []string{}
-	deck := GetShuffledDeck()
-	pool := make([]string, len(deck))
-	copy(pool, deck)
-	for len(shuffledDeck) < len(deck) {
-		card := GetRandomCard()
-		if !inArray(card, shuffledDeck) {
-			shuffledDeck = append(shuffledDeck, card)
-		}
+	deck := GetOrderedDeck()
+	for len(deck) > 0 {
+		i := rand.Intn(len(deck))
+		card := deck[i]
+		deck[i] = deck[len(deck)-1]
+		deck = deck[:len(deck)-1]
+		shuffledDeck = append(shuffledDeck, card)
 	}
 	return
 }
 
-func inArray(needle string, haystack []string) bool {
-	for _, v := range haystack {
-		if v == needle {
-			return true
-		}
+// GetRandomDeck returns a random deck of predefined size
+func GetRandomDeck(size int) (randomDeck []string) {
+	randomDeck = []string{}
+	deck := GetShuffledDeck()
+	for len(randomDeck) < size {
+		i := rand.Intn(len(deck))
+		card := deck[i]
+		deck[i] = deck[len(deck)-1]
+		deck = deck[:len(deck)-1]
+		randomDeck = append(randomDeck, card)
 	}
-	return false
+	return
 }
 
 // Shuffle
-// Get Random Deck

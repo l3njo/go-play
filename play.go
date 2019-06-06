@@ -8,7 +8,7 @@ import (
 
 func main() {
 	fmt.Println(card.GetRandomCard())
-	for i, v := range card.GetShuffledDeck() {
+	for i, v := range card.GetRandomDeck(4) {
 		fmt.Printf("%v: %v\n", i+1, v)
 	}
 }
