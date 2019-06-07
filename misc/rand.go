@@ -1,6 +1,6 @@
 package misc
 
-// This file contains all central functions
+// This file contains all rand-based functions
 
 import (
 	"math/rand"

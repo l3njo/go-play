@@ -1,43 +1,12 @@
 package coin
 
 import (
-	"math/rand"
-	"time"
+	"github.com/l3njo/play/misc"
 )
-
-var flipset *set
-
-type set struct {
-	src   rand.Source
-	cache int64
-	rem   int
-}
-
-// bool generates 64 bool values, and caches them in a Int63 var.
-// values are popped from cache when a random bool is requested.
-// values are regenerated when cache is exhausted.
-func (s *set) bool() bool {
-	if s.rem == 0 {
-		s.cache, s.rem = s.src.Int63(), 63
-	}
-	res := s.cache&0x01 == 1
-	s.cache >>= 1
-	s.rem--
-	return res
-}
-
-func init() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	flipset = newSet()
-}
-
-func newSet() *set {
-	return &set{src: rand.NewSource(time.Now().UnixNano())}
-}
 
 // Flip returns a boolean value, true for heads and false for tails.
 func Flip() bool {
-	return flipset.bool()
+	return misc.Bool()
 }
 
 // FlipVerbose returns the result ofa flips as a string
@@ -52,7 +21,7 @@ func FlipVerbose() string {
 func Flipn(num int) (resultSet []bool) {
 	resultSet = []bool{}
 	for len(resultSet) < num {
-		resultSet = append(resultSet, flipset.bool())
+		resultSet = append(resultSet, misc.Bool())
 	}
 	return
 }
@@ -62,7 +31,6 @@ func FlipVerbosen(num int) (resultSet []string) {
 	resultSet = []string{}
 	rawSet := Flipn(num)
 	for _, isHeads := range rawSet {
-		// FIXME
 		if isHeads {
 			resultSet = append(resultSet, "heads")
 		} else {
