@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/l3njo/play/dice"
+	"github.com/l3njo/play/coin"
 )
 
 func main() {
-	fmt.Println(dice.Roll(2, 3))
-	fmt.Println(dice.RollUneven(2, 3, 4, 2, 7, 3))
+	fmt.Println(coin.Flipn(23))
+	fmt.Println(coin.FlipVerbosen(23))
 }
