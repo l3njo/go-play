@@ -11,17 +11,17 @@ func init() {
 }
 
 // Roll returns random results for num dice of sides faces each
-// panics if either argument is <= 0
-func Roll(num, sides int) (rolls []int) {
+// Returns an error if num <= 0 || sides <= 2
+func Roll(num, sides int) (rolls []int, err string) {
 	rolls = []int{}
+	err = ""
 	if num <= 0 {
-		// FIXME String formatting
-		panic("Cannot roll 0 dice.")
+		err = err + fmt.Sprintf("Cannot roll %v dice.\n", num)
+		return
 	}
 	if sides <= 2 {
-		// FIXME String formatting
-		panicMsg := "Cannot roll dice with 0 faces"
-		panic(panicMsg)
+		err = err + fmt.Sprintf("Cannot roll dice with %v faces.\n", sides)
+		return
 	}
 	for len(rolls) < num {
 		rolls = append(rolls, rand.Intn(sides)+1)
@@ -30,6 +30,7 @@ func Roll(num, sides int) (rolls []int) {
 }
 
 // RollUneven returns results for a number of dice of sides faces
+// Returns 0 and an error for any side <= 2
 func RollUneven(sides ...int) (unevenRolls []int, err string) {
 	unevenRolls = []int{}
 	err = ""
@@ -38,9 +39,7 @@ func RollUneven(sides ...int) (unevenRolls []int, err string) {
 			unevenRolls = append(unevenRolls, rand.Intn(v)+1)
 			continue
 		}
-		// FIXME String formatting
-		err = err + "Error on input."
-		fmt.Printf("Error in input %v.", i)
+		err = err + fmt.Sprintf("Error on input %v.\n", i)
 		unevenRolls = append(unevenRolls, 0)
 	}
 	return
