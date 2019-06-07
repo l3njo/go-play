@@ -2,15 +2,17 @@ package card
 
 import (
 	"math/rand"
+
+	"github.com/l3njo/play/misc"
 )
 
 // GetOrderedDeck returns an entire ordered deck as a slice
 func GetOrderedDeck() (deck []string) {
 	deck = []string{}
-	for _, suit := range suits {
-		for _, face := range faces {
-			card := &Card{face: face, suit: suit}
-			deck = append(deck, card.getCard())
+	for _, suit := range misc.Suits {
+		for _, face := range misc.Faces {
+			card := &misc.Card{Face: face, Suit: suit}
+			deck = append(deck, misc.GetCard(card))
 		}
 	}
 	return

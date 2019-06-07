@@ -1,19 +1,11 @@
 package misc
 
-// TODO This package should contain all central functions and structs
+// This file contains all central functions
 
 import (
 	"math/rand"
 	"time"
 )
-
-var boolCache *boolstruct
-
-type boolstruct struct {
-	src   rand.Source
-	cache int64
-	rem   int
-}
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -35,7 +27,7 @@ func (b *boolstruct) generate() bool {
 }
 
 // Bool returns a random bool
-func Bool(){
+func Bool() bool {
 	return boolCache.generate()
 }
 
@@ -50,19 +42,19 @@ func IntInRange(apex, zenith int) int {
 }
 
 // Ints returns n ints in the range 0, apex-1
-func Ints(n, apex int) (resultSet []int) {
-	resultSet = []int{}
-	for len(resultSet) < n {
-		resultSet := append(resultSet, Int(apex))
-	}
-	return
-}
+// func Ints(n, apex int) (resultSet []int) {
+// 	resultSet = []int{}
+// 	for len(resultSet) < n {
+// 		resultSet := append(resultSet, Int(apex))
+// 	}
+// 	return
+// }
 
 // IntsInRange returns n ints in the range zenith, apex-1
-func IntsInRange(n, apex, zenith int) (resultSet []int) {
-	resultSet = []int{}
-	for len(resultSet) < n {
-		resultSet := append(resultSet, IntInRange(apex, zenith))
-	}
-	return
-}
+// func IntsInRange(n, apex, zenith int) (resultSet []int) {
+// 	resultSet = []int{}
+// 	for len(resultSet) < n {
+// 		resultSet := append(resultSet, IntInRange(apex, zenith))
+// 	}
+// 	return
+// }
