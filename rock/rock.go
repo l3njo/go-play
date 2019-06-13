@@ -7,29 +7,37 @@ import (
 	"github.com/l3njo/play/misc"
 )
 
-// Get returns a random value from {"rock", "paper", "scissors"}
-func Get() string {
-	return misc.Choices[misc.Int(len(misc.Choices))]
+// Get returns a slice of random values from {"rock", "paper", "scissors"}
+func Get(num int) (resultSet []string, err string) {
+	resultSet = []string{}
+	err = ""
+	for len(resultSet) < num{
+		resultSet = append(resultSet, misc.Choices[misc.Int(len(misc.Choices))])
+	}
+	return
 }
 
 
-// Play returns a string stating what each player chose and a bool for whether the user won.
-func Play(userChoice string) (result string) {
-	result = ""
-	_, valid := misc.ChoiceMap[userChoice]
-	if !valid {
-		result = "Error! Invalid choice."
-		return
-	}
-	userChoice = strings.ToLower(userChoice)
-	computerChoice := misc.Choices[misc.Int(len(misc.Choices))]
-	switch userChoice {
-		case computerChoice:
-			result = fmt.Sprintf("You drew! You both chose %v.", computerChoice)
-		case misc.ChoiceMap[computerChoice]:
-			result = fmt.Sprintf("You lost! You chose %v and the computer chose %v.", userChoice, computerChoice)
-		default:
-			result = fmt.Sprintf("You won! You chose %v and the computer chose %v.", userChoice, computerChoice)
+// Play returns a slice of strings stating what each player chose and whether the user won.
+func Play(userChoices ...string) (resultSet []string, err string) {
+	resultSet = []string{}
+	err = ""
+	for i, userChoice := range userChoices{
+		_, valid := misc.ChoiceMap[userChoice]
+		if !valid {
+			err = err + fmt.Sprintf("Error on input %v! Invalid choice.\n", i)
+			continue
+		}
+		userChoice = strings.ToLower(userChoice)
+		computerChoice := misc.Choices[misc.Int(len(misc.Choices))]
+		switch userChoice {
+			case computerChoice:
+				resultSet = append(resultSet, fmt.Sprintf("%v: You drew! You both chose %v.\n", i, computerChoice))
+			case misc.ChoiceMap[computerChoice]:
+				resultSet = append(resultSet, fmt.Sprintf("%v: You lost! You chose %v and the computer chose %v.\n", i, userChoice, computerChoice))
+			default:
+				resultSet = append(resultSet, fmt.Sprintf("%v: You won! You chose %v and the computer chose %v.\n", i, userChoice, computerChoice))
+		}
 	}
 	return
 }
